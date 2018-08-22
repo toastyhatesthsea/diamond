@@ -44,15 +44,15 @@ class DiamondPrinter {
             aString = aString.concat(Character.toString(a));
             if (a != 'A')
             {
-
+                String inBetweenSpaces = "";
                 //int totalSpacesBetweenChars = a - 'A';
                 if ((int) a == sizeOfDiamond) //In the middle of the diamond
                 {
-                    String inBetweenSpaces = getSpaces(howLargeIsDiamond(a));
+                    inBetweenSpaces = getSpaces(howLargeIsDiamond(a));
                 }
                 else
                 {
-                    String inBetweenSpaces = getSpaces(sizeOfDiamond - howLargeIsDiamond(a));
+                    inBetweenSpaces = getSpaces(sizeOfDiamond - howLargeIsDiamond(a));
                 }
 
                 aString = aString.concat(inBetweenSpaces);
