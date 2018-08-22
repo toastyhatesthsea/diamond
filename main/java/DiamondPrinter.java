@@ -10,17 +10,17 @@ class DiamondPrinter {
         Character starterLetter = 'A';
 
 
-        for (int i = 0; i <= totalSize; i++)
+        for (int i = 1; i <= totalSize; i++)
         {
-            answer.add(oneLine(starterLetter, totalSize - i));
+            answer.add(oneLine(starterLetter, totalSize - i, totalSize));
             starterLetter = (char) (starterLetter + 1);
         }
 
-        starterLetter = (char) (starterLetter - 1);
+        starterLetter = (char) (starterLetter - 2);
 
         for (int i = 1; i <= totalSize; i++)
         {
-            answer.add(oneLine(starterLetter, i));
+            answer.add(oneLine(starterLetter, i, totalSize));
             starterLetter = (char) (starterLetter - 1);
         }
 
@@ -33,21 +33,31 @@ class DiamondPrinter {
      * @param padding int
      * @return List
      */
-    public List<String> oneLine(char a, int padding)
+    public String oneLine(char a, int padding, int sizeOfDiamond)
     {
         String aString = "";
 
-        if (padding > 0)
+        if (padding > 0 || a != 'A')
         {
             String totalSpaces = getSpaces(padding);
             aString = aString.concat(totalSpaces);
             aString = aString.concat(Character.toString(a));
-            if (a != 'a')
+            if (a != 'A')
             {
-                int totalSpacesBetweenChars = a - 'A';
-                String inBetweenSpaces = getSpaces(totalSpacesBetweenChars);
+
+                //int totalSpacesBetweenChars = a - 'A';
+                if ((int) a == sizeOfDiamond) //In the middle of the diamond
+                {
+                    String inBetweenSpaces = getSpaces(howLargeIsDiamond(a));
+                }
+                else
+                {
+                    String inBetweenSpaces = getSpaces(sizeOfDiamond - howLargeIsDiamond(a));
+                }
 
                 aString = aString.concat(inBetweenSpaces);
+
+
                 aString = aString.concat(Character.toString(a));
             }
 
@@ -61,7 +71,7 @@ class DiamondPrinter {
         List answer = new ArrayList<String>();
         answer.add(aString);
 
-        return answer;
+        return aString;
     }
 
     public String getSpaces(int num)
@@ -85,7 +95,7 @@ class DiamondPrinter {
     {
         a = Character.toUpperCase(a);
 
-        return a - 'A';
+        return a - 'A' + 1;
     }
 
 
@@ -100,7 +110,7 @@ class DiamondTesters
 
         int size = dia.howLargeIsDiamond('Z');
 
-        List meow = dia.oneLine('A', 3);
+        //List meow = dia.oneLine('A', 3);
 
         //System.out.println("A" + dia.getSpaces(3) + "A");
 
