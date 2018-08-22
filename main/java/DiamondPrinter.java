@@ -1,27 +1,29 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 class DiamondPrinter {
 
     List<String> printToList(char a) {
 
-        int totalSize = howLargeIsDiamond(a);
+        int totalSize = (howLargeIsDiamond(a) - 1) * 2 + 1;
+        int middleSize = totalSize / 2;
         List answer = new ArrayList();
-        Character starterLetter = 'A';
+        Character currentLetter = 'A';
 
 
-        for (int i = 1; i <= totalSize; i++)
+        for (int i = 0; i <= middleSize; i++)
         {
-            answer.add(oneLine(starterLetter, totalSize - i, totalSize));
-            starterLetter = (char) (starterLetter + 1);
+            answer.add(oneLine2(currentLetter, totalSize, middleSize));
+            currentLetter = (char) (currentLetter + 1);
         }
 
-        starterLetter = (char) (starterLetter - 2);
+        currentLetter = (char) (currentLetter - 2);
 
-        for (int i = 1; i <= totalSize; i++)
+        for (int i = 0; i < middleSize; i++)
         {
-            answer.add(oneLine(starterLetter, i, totalSize));
-            starterLetter = (char) (starterLetter - 1);
+            answer.add(oneLine2(currentLetter, totalSize, middleSize));
+            currentLetter = (char) (currentLetter - 1);
         }
 
         return answer;
@@ -46,7 +48,7 @@ class DiamondPrinter {
             {
                 String inBetweenSpaces = "";
                 //int totalSpacesBetweenChars = a - 'A';
-                if ((int) a == sizeOfDiamond) //In the middle of the diamond
+                if ((int) a - 'A' + 1 == sizeOfDiamond) //In the middle of the diamond
                 {
                     inBetweenSpaces = getSpaces(howLargeIsDiamond(a));
                 }
@@ -72,6 +74,36 @@ class DiamondPrinter {
         answer.add(aString);
 
         return aString;
+    }
+
+    public String oneLine2(char a, int sizeOfDiamond, int middle)
+    {
+        String answer = getSpaces(sizeOfDiamond);
+        char[] lineArray = answer.toCharArray();
+        int distanceFromCharacterA = a - 'A';
+
+        if (a == 'A')
+        {
+            lineArray[middle] = 'A';
+        }
+        else
+        {
+            lineArray[middle - distanceFromCharacterA] = a;
+            lineArray[middle + distanceFromCharacterA] = a;
+        }
+
+        return charArrayToString(lineArray);
+    }
+
+    public String charArrayToString(char[] anArray)
+    {
+        String answer = "";
+
+        for (Character aChar : anArray)
+        {
+            answer = answer.concat(Character.toString(aChar));
+        }
+        return answer;
     }
 
     public String getSpaces(int num)
